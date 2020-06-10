@@ -1,17 +1,4 @@
-import cv2
-import numpy as np
 
-bord =[
-    [0, 4, 0, 0, 0, 0, 0, 0, 7],
-    [0, 0, 0, 0, 0, 1, 8, 4, 0],
-    [0, 0, 0, 5, 0, 9, 0, 1, 2],
-    [0, 0, 1, 2, 0, 4, 5, 0, 0],
-    [0, 0, 0, 6, 1, 0, 0, 7, 3],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [8, 0, 0, 0, 9, 0, 0, 0, 0],
-    [0, 0, 5, 4, 2, 0, 0, 8, 0],
-    [0, 9, 6, 0, 0, 7, 0, 0, 5]
-      ]
 def can_put(bord, pos, num):
     y, x = pos
     if num in bord[y]:
@@ -28,7 +15,6 @@ def can_put(bord, pos, num):
     return True
 
 def rec_brute(bord):
-    # while True:
     for y in range(0, 9):
         for x in range(0, 9):
             pos = (y, x)
@@ -36,10 +22,12 @@ def rec_brute(bord):
                 for num in range(1, 10):
                     if can_put(bord, pos, num):
                         bord[y][x] = num
-                        rec_brute(bord)
+                        fin_all, bord = rec_brute(bord)
+                        if fin_all:
+                            return True, bord
                         bord[y][x] = 0
                 else:
-                    return
+                    return False, bord
     fin = True
     for line in range(9):
         if 0 in bord[line]:
@@ -48,23 +36,5 @@ def rec_brute(bord):
         print('finished')
         for line in range(9):
             print(bord[line])
+        return True, bord
 
-
-
-rec_brute(bord)
-
-
-
-
-
-# bord =[
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0, 0, 0, 0, 0]
-#       ]
